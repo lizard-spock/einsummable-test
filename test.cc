@@ -7,13 +7,13 @@
 struct TensorData {
     std::string name;
     size_t size;
-    std::vector<float> tensor;
+    std::vector<uint16_t> tensor;
 };
 
 int main() {
     // Open the binary file in read mode
     std::cout << "Hello world!" << std::endl;
-    std::ifstream file("../output.bin", std::ios::binary);
+    std::ifstream file("../output16.bin", std::ios::binary);
     
     if (!file) {
         std::cerr << "Failed to open the file." << std::endl;
@@ -41,9 +41,10 @@ int main() {
         uint32_t size;
         file.read(reinterpret_cast<char*>(&size), sizeof(uint32_t));
         
-        // Read the tensor data
-        std::vector<float> tensor(size);
-        file.read(reinterpret_cast<char*>(tensor.data()), size * sizeof(float));
+        // Read the tensor dataf
+        std::vector<uint16_t> tensor(size);
+        std::cout << "size of uint16t:" << sizeof(uint16_t) << std::endl;
+        file.read(reinterpret_cast<char*>(tensor.data()), size * sizeof(uint16_t));
         
         // Store the extracted data
         extracted_data.push_back({name, size, tensor});
